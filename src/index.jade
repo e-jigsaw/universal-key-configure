@@ -2,6 +2,11 @@ doctype html
 html
   head
     link(href='index.css', rel='stylesheet', type='text/css')
+    script(src='fuse.min.js', type='text/javascript')
+    script(src='vue.min.js', type='text/javascript')
   body
-    input#command
+    #command
+      input(v-on='keyup: search', v-model='word')
+      ul#results
+        li(v-repeat='results') {{$value}}
     script(src='index.js', type='text/javascript')
