@@ -1,0 +1,14 @@
+manifest_version: 2
+name: 'universal-key-configure'
+description: 'Universal key configure'
+version: '0.0.1'
+permissions: [
+  'tabs'
+]
+browser_action:
+  default_popup: 'index.html'
+commands:
+  _execute_browser_action:
+    suggested_key:
+      default: 'Ctrl+K'
+      mac: 'MacCtrl+K'
