@@ -1,0 +1,6 @@
+[submodule "lib/Fuse"]
+	path = lib/Fuse
+	url = https://github.com/krisk/Fuse.git
+[submodule "lib/vue"]
+	path = lib/vue
+	url = https://github.com/yyx990803/vue.git
