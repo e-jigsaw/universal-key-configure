@@ -9,5 +9,5 @@ html
     #command
       input(v-on='keyup: search, keydown: tabcheck', v-model='word')
       ul#results
-        li(v-repeat='result: results') {{result.full}} - {{result.description}}
+        li(v-repeat='result: results') {{result.display}}
     script(src='index.js', type='text/javascript')

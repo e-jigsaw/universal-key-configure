@@ -23,21 +23,37 @@ new Vue
       target = @.$data.word.split ' '
       if target.length is 1
         res = commandsFuse.search @.$data.word
-        len = if @.$data.results.length > res.length then @.$data.results.length else res.length
-        [0..len].forEach (i)=>
-          if res[i]?
-            @.$data.results.$set i, res[i]
-          else
-            if @.$data.results[i]? then @.$data.results.$remove i
+        @resultApply @cmdgen(res)
       else if target.length is 2
-        if target[0] is COMMANDS[0].full or target[0] is COMMANDS[0].alias then @tabSelector()
+        if target[0] is COMMANDS[0].full or target[0] is COMMANDS[0].alias then @tabSelector target[1]
+    cmdgen: (res)-> _.map res, (row)->
+      r =
+        display: "#{row.full} - #{row.description}"
+        original: row
+    tabgen: (res)-> _.map res, (row)->
+      r =
+        display: "#{row.key}: #{row.title} #{row.url}"
+        original: row
     keygen: (num)->
-      keyCandidate = 'asdfqwerzxcv1234'.split ''
-      keylen = keyCandidate.length
-      if num < keylen
-        return keyCandidate[num]
-      else if (n = Math.floor(num / keyCandidate.length)) < keylen
-        return keyCandidate[n] + keygen(num - (n * keylen))
-    tabSelector: -> chrome.tabs.query {}, (tabs)->
+      num = num.toString(16).split ''
+      shortcuts = 'asdfqwerzxcv1234'.split ''
+      hex       = '0123456789abcdef'.split ''
+      zip       = _.zipObject hex, shortcuts
+      _.reduce _.rest(num), (sum, c)->
+        "#{sum}#{zip[c]}"
+      , zip[_.first(num)]
+    resultApply: (res)->
+      len = if @.$data.results.length > res.length then @.$data.results.length else res.length
+      [0..len].forEach (i)=>
+        if res[i]?
+          @.$data.results.$set i, res[i]
+        else
+          if @.$data.results[i]? then @.$data.results.$remove i
+    tabSelector: (word)-> chrome.tabs.query {}, (tabs)=>
+      tabs = _.map tabs, (tab, i)=>
+        tab.key = @keygen i
+        tab
       tabFuse = new Fuse tabs,
-        keys: ['title', 'url']
+        keys: ['title', 'url', 'key']
+      res = tabFuse.search word
+      @resultApply @tabgen(res)
