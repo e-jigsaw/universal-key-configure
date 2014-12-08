@@ -4,3 +4,6 @@
 [submodule "lib/vue"]
 	path = lib/vue
 	url = https://github.com/yyx990803/vue.git
+[submodule "lib/lodash"]
+	path = lib/lodash
+	url = https://github.com/lodash/lodash.git
