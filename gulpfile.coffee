@@ -32,7 +32,7 @@ gulp.task 'coffee', ->
     .pipe gulp.dest(paths.dest)
 
 gulp.task 'copy', ->
-  gulp.src ['lib/Fuse/src/fuse.min.js', 'lib/vue/dist/vue.min.js']
+  gulp.src ['lib/Fuse/src/fuse.min.js', 'lib/vue/dist/vue.min.js', 'lib/lodash/dist/lodash.min.js']
     .pipe gulp.dest(paths.dest)
 
 gulp.task 'default', ['cson', 'jade', 'styl', 'coffee', 'copy']
