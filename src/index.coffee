@@ -3,6 +3,13 @@ COMMANDS = [
     full: 'tab'
     alias: 't'
     description: 'Move current tab'
+    action: (target)->
+      tab = (_.find @.$data.results,
+        original:
+          key: target[1]
+      ).original
+      chrome.tabs.update tab.id,
+        active: true
   }
 ]
 commandsFuse = new Fuse COMMANDS,
@@ -78,4 +85,5 @@ new Vue
       res = tabFuse.search word
       @resultApply @tabgen(res)
     run: ->
-      console.log 'Run'
+      target = @.$data.word.split ' '
+      if _.first(target) is COMMANDS[0].full or _.first(target) is COMMANDS[0].alias then COMMANDS[0].action.call(@, target)
