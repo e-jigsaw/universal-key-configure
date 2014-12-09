@@ -7,7 +7,7 @@ html
     script(src='vue.min.js', type='text/javascript')
   body
     #command
-      input(v-on='keyup: search, keydown: tabcheck', v-model='word')
+      input(v-on='keyup: search, keydown: keycheck', v-model='word')
       ul#results
         li(v-repeat='result: results') {{result.display}}
     script(src='index.js', type='text/javascript')
