@@ -1,0 +1,13 @@
+manifest_version: 2
+name: 'universal-key-configure'
+description: 'Modify keyconfig when you access anything you want web pages'
+version: '0.0.1'
+content_scripts: [
+  {
+    matches: [
+      'https://github.com/*'
+    ]
+    run_at: 'document_end'
+    js: ['js/github.js']
+  }
+]
