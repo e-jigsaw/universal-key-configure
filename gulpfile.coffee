@@ -28,7 +28,15 @@ gulp.task 'styl', ->
     .pipe styl()
     .pipe gulp.dest(paths.dest)
 
-gulp.task 'browserify', ['browserify-option']
+gulp.task 'browserify', ['browserify-index', 'browserify-option']
+
+gulp.task 'browserify-index', ->
+  browserify
+    entries: ['./src/index.coffee']
+    extensions: ['.coffee']
+  .bundle()
+  .pipe source 'index.js'
+  .pipe gulp.dest 'build'
 
 gulp.task 'browserify-option', ->
   browserify
